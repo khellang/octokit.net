@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 
 namespace Octokit.Internal
 {
-    public class ReadOnlyPagedCollection<T> : ReadOnlyCollection<T>, IReadOnlyPagedCollection<T>
+    public class ReadOnlyPagedCollection<T> : System.Collections.ObjectModel.ReadOnlyCollection<T>, IReadOnlyPagedCollection<T>
     {
         readonly ApiInfo _info;
         readonly Func<Uri, Task<IResponse<List<T>>>> _nextPageFunc;
