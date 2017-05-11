@@ -86,7 +86,7 @@ namespace Octokit
         /// Searches repositories based on the language they’re written in.
         /// https://help.github.com/articles/searching-repositories#languages
         /// </summary>
-        public Language? Language { get; set; }
+        public StringEnum<Language>? Language { get; set; }
 
         /// <summary>
         /// Searches repositories based on the number of stars.
@@ -141,9 +141,9 @@ namespace Octokit
                 parameters.Add(string.Format(CultureInfo.InvariantCulture, "stars:{0}", Stars));
             }
 
-            if (Language != null)
+            if (Language.HasValue && !string.IsNullOrWhiteSpace(Language.Value.StringValue))
             {
-                parameters.Add(string.Format(CultureInfo.InvariantCulture, "language:{0}", Language));
+                parameters.Add(string.Format(CultureInfo.InvariantCulture, "language:{0}", Language.Value.StringValue));
             }
 
             if (User.IsNotBlank())

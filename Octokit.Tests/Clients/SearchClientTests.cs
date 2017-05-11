@@ -206,7 +206,7 @@ namespace Octokit.Tests.Clients
                 client.SearchUsers(request);
                 connection.Received().Get<SearchUsersResult>(
                     Arg.Is<Uri>(u => u.ToString() == "search/users"),
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+language:Ruby"));
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+language:ruby"));
             }
 
             [Fact]
@@ -441,7 +441,7 @@ namespace Octokit.Tests.Clients
             }
 
             [Fact]
-            public void TestingTheLangaugeQualifier()
+            public void TestingTheLanguageQualifier()
             {
                 var connection = Substitute.For<IApiConnection>();
                 var client = new SearchClient(connection);
@@ -450,7 +450,7 @@ namespace Octokit.Tests.Clients
                 request.Language = Language.Ruby;
                 client.SearchRepo(request);
                 connection.Received().Get<SearchRepositoryResult>(Arg.Is<Uri>(u => u.ToString() == "search/repositories"),
-                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+language:Ruby"));
+                    Arg.Is<Dictionary<string, string>>(d => d["q"] == "github+language:ruby"));
             }
 
             [Fact]

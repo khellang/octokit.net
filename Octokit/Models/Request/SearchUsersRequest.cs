@@ -64,7 +64,7 @@ namespace Octokit
         /// Search for users that have repositories that match a certain language.
         /// <remarks>https://help.github.com/articles/searching-users#language</remarks>       
         /// </summary>
-        public Language? Language { get; set; }
+        public StringEnum<Language>? Language { get; set; }
 
         /// <summary>
         /// With this qualifier you can restrict the search to just personal accounts or just organization accounts.
@@ -115,9 +115,9 @@ namespace Octokit
                 parameters.Add(string.Format(CultureInfo.InvariantCulture, "location:{0}", Location));
             }
 
-            if (Language != null)
+            if (Language.HasValue && !string.IsNullOrWhiteSpace(Language.Value.StringValue))
             {
-                parameters.Add(string.Format(CultureInfo.InvariantCulture, "language:{0}", Language));
+                parameters.Add(string.Format(CultureInfo.InvariantCulture, "language:{0}", Language.Value.StringValue));
             }
 
             if (Created != null)

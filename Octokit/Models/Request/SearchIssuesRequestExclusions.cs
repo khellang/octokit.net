@@ -96,7 +96,7 @@ namespace Octokit
         /// <remarks>
         /// https://help.github.com/articles/searching-issues/#search-by-the-main-language-of-a-repository
         /// </remarks>
-        public Language? Language { get; set; }
+        public StringEnum<Language>? Language { get; set; }
 
         /// <summary>
         /// Excludes pull requests based on the status of the commits.
@@ -162,9 +162,9 @@ namespace Octokit
                 parameters.AddRange(Labels.Select(label => string.Format(CultureInfo.InvariantCulture, "-label:{0}", label)));
             }
 
-            if (Language != null)
+            if (Language.HasValue && !string.IsNullOrWhiteSpace(Language.Value.StringValue))
             {
-                parameters.Add(string.Format(CultureInfo.InvariantCulture, "-language:{0}", Language.ToParameter()));
+                parameters.Add(string.Format(CultureInfo.InvariantCulture, "-language:{0}", Language.Value.StringValue));
             }
 
             if (Status.HasValue)

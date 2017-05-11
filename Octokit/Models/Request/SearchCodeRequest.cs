@@ -87,7 +87,7 @@ namespace Octokit
         /// <remarks>
         /// https://help.github.com/articles/searching-code#language
         /// </remarks>
-        public Language? Language { get; set; }
+        public StringEnum<Language>? Language { get; set; }
 
         /// <summary>
         /// Specifies that code from forked repositories should be searched. 
@@ -159,9 +159,9 @@ namespace Octokit
                     string.Join(",", In.Select(i => i.ToParameter()))));
             }
 
-            if (Language != null)
+            if (Language.HasValue && !string.IsNullOrWhiteSpace(Language.Value.StringValue))
             {
-                parameters.Add(string.Format(CultureInfo.InvariantCulture, "language:{0}", Language.ToParameter()));
+                parameters.Add(string.Format(CultureInfo.InvariantCulture, "language:{0}", Language.Value.StringValue));
             }
 
             if (Forks != null)
