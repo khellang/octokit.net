@@ -434,6 +434,7 @@ namespace Octokit
         [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "HotKey")]
         [Parameter(Value = "AutoHotkey")]
         AutoHotKey,
+
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Awk")]
         [Parameter(Value = "awk")]
         Awk,
