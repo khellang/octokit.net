@@ -86,7 +86,7 @@ namespace Octokit
         /// Searches repositories based on the language they’re written in.
         /// https://help.github.com/articles/searching-repositories#languages
         /// </summary>
-        public Language? Language { get; set; }
+        public StringEnum<Language>? Language { get; set; }
 
         /// <summary>
         /// Searches repositories based on the number of stars.
@@ -141,9 +141,9 @@ namespace Octokit
                 parameters.Add(string.Format(CultureInfo.InvariantCulture, "stars:{0}", Stars));
             }
 
-            if (Language != null)
+            if (Language.HasValue && !string.IsNullOrWhiteSpace(Language.Value.StringValue))
             {
-                parameters.Add(string.Format(CultureInfo.InvariantCulture, "language:{0}", Language));
+                parameters.Add(string.Format(CultureInfo.InvariantCulture, "language:{0}", Language.Value.StringValue));
             }
 
             if (User.IsNotBlank())
@@ -395,355 +395,677 @@ namespace Octokit
     {
 #pragma warning disable 1591
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Abap")]
+        [Parameter(Value = "abap")]
         Abap,
+
         [Parameter(Value = "ActionScript")]
         ActionScript,
+        
+        [Parameter(Value = "ada")]
         Ada,
+        
+        [Parameter(Value = "apex")]
         Apex,
+        
         [Parameter(Value = "AppleScript")]
         AppleScript,
+        
+        [Parameter(Value = "arc")]
         Arc,
+
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Arduino")]
+        [Parameter(Value = "arduino")]
         Arduino,
+
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Conf")]
         [Parameter(Value = "ApacheConf")]
         ApacheConf,
+        
+        [Parameter(Value = "asp")]
         Asp,
+
+        [Parameter(Value = "assembly")]
         Assembly,
+
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Augeas")]
+        [Parameter(Value = "augeas")]
         Augeas,
-        [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "HotKey")]
+
         [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "HotKey")]
         [Parameter(Value = "AutoHotkey")]
         AutoHotKey,
+
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Awk")]
+        [Parameter(Value = "awk")]
         Awk,
+
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Batchfile")]
+        [Parameter(Value = "batchfile")]
         Batchfile,
+
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Befunge")]
+        [Parameter(Value = "befunge")]
         Befunge,
+
         [Parameter(Value = "BlitzMax")]
         BlitzMax,
+
+        [Parameter(Value = "boo")]
         Boo,
+
+        [Parameter(Value = "bro")]
         Bro,
+
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "C")]
+        [Parameter(Value = "c")]
         C,
-        [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "hs")]
+
         [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "hs")]
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "hs")]
         [Parameter(Value = "C2HS Haskell")]
         C2hsHaskell,
+        
+        [Parameter(Value = "ceylon")]
         Ceylon,
+
+        [Parameter(Value = "chuck")]
         Chuck,
+
+        [Parameter(Value = "clips")]
         Clips,
+
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Clojure")]
+        [Parameter(Value = "clojure")]
         Clojure,
+
+        [Parameter(Value = "cobol")]
         Cobol,
+
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Cmake")]
+        [Parameter(Value = "cmake")]
         Cmake,
+
         [Parameter(Value = "C-ObjDump")]
         CObjDump,
+
         [Parameter(Value = "CoffeeScript")]
         CoffeeScript,
+        
         [Parameter(Value = "ColdFusion")]
         ColdFusion,
+        
+        [Parameter(Value = "commonlisp")]
         CommonLisp,
+
+        [Parameter(Value = "coq")]
         Coq,
+
         [Parameter(Value = "C++")]
         CPlusPlus,
+        
         [Parameter(Value = "CSharp")]
         CSharp,
+        
+        [Parameter(Value = "css")]
         Css,
+
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Cpp")]
         [Parameter(Value = "Cpp-ObjDump")]
         CppObjDump,
+        
+        [Parameter(Value = "cucumber")]
         Cucumber,
+
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Cython")]
+        [Parameter(Value = "cython")]
         Cython,
+
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "D")]
+        [Parameter(Value = "d")]
         D,
+
         [Parameter(Value = "D-ObjDump")]
         DObjDump,
+
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Darcs")]
         [Parameter(Value = "DarcsPatch")]
         DarcsPatch,
+
+        [Parameter(Value = "dart")]
         Dart,
+
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dcpu")]
         [Parameter(Value = "DCPU-16 ASM")]
         Dcpu16Asm,
+
+        [Parameter(Value = "dot")]
         Dot,
+
+        [Parameter(Value = "dylan")]
         Dylan,
+
         [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Ec")]
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Ec")]
+        [Parameter(Value = "ec")]
         Ec,
+
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Ecere")]
         [Parameter(Value = "Ecere Projects")]
         EcereProjects,
+
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Ecl")]
+        [Parameter(Value = "ecl")]
         Ecl,
+
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Edn")]
+        [Parameter(Value = "edn")]
         Edn,
+
+        [Parameter(Value = "eiffel")]
         Eiffel,
+
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Elixir")]
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Elixir")]
+        [Parameter(Value = "elixir")]
         Elixir,
+
+        [Parameter(Value = "elm")]
         Elm,
+
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Emacs")]
-        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Emacs")]
+        [Parameter(Value = "emacslisp")]
         EmacsLisp,
+
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Erlang")]
-        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Erlang")]
+        [Parameter(Value = "erlang")]
         Erlang,
+
         [Parameter(Value = "F#")]
         FSharp,
+
+        [Parameter(Value = "factor")]
         Factor,
+
+        [Parameter(Value = "fancy")]
         Fancy,
+
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Fantom")]
-        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Fantom")]
+        [Parameter(Value = "fantom")]
         Fantom,
+
+        [Parameter(Value = "fish")]
         Fish,
+
+        [Parameter(Value = "forth")]
         Forth,
+
+        [Parameter(Value = "fortran")]
         Fortran,
+
+        [Parameter(Value = "gas")]
         Gas,
+
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Genshi")]
-        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Genshi")]
+        [Parameter(Value = "genshi")]
         Genshi,
+
         [Parameter(Value = "Gentoo Build")]
         GentooBuild,
-        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Eclass")]
+
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Eclass")]
         [Parameter(Value = "Gentoo Eclass")]
         GentooEclass,
-        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Gettext")]
+
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Gettext")]
         [Parameter(Value = "Gettext Catalog")]
         GettextCatalog,
+
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Glsl")]
-        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Glsl")]
+        [Parameter(Value = "glsl")]
         Glsl,
+
+        [Parameter(Value = "go")]
         Go,
+
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Gosu")]
-        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Gosu")]
-        Gosu,
+        [Parameter(Value = "su")]
+        su,
+
+        [Parameter(Value = "groff")]
         Groff,
+
+        [Parameter(Value = "groovy")]
         Groovy,
+
         [Parameter(Value = "Groovy Server Pages")]
         GroovyServerPages,
+        
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Haml")]
-        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Haml")]
+        [Parameter(Value = "haml")]
         Haml,
-        [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "HandleBars")]
+
         [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "HandleBars")]
         [Parameter(Value = "HandleBars")]
         HandleBars,
+
+        [Parameter(Value = "haskell")]
         Haskell,
+
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Haxe")]
+        [Parameter(Value = "haxe")]
         Haxe,
+
+        [Parameter(Value = "http")]
         Http,
+
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Ini")]
+        [Parameter(Value = "ini")]
         Ini,
+
         [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Io")]
+        [Parameter(Value = "io")]
         Io,
+
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Ioke")]
+        [Parameter(Value = "ioke")]
         Ioke,
+
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Irc")]
         [Parameter(Value = "IRC log")]
         IrcLog,
+
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "J")]
+        [Parameter(Value = "j")]
         J,
+
+        [Parameter(Value = "java")]
         Java,
+
         [Parameter(Value = "Java Server Pages")]
         JavaServerPages,
+
+        [Parameter(Value = "javascript")]
         JavaScript,
+
+        [Parameter(Value = "json")]
         Json,
+
+        [Parameter(Value = "julia")]
         Julia,
+
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Kotlin")]
+        [Parameter(Value = "kotlin")]
         Kotlin,
+
+        [Parameter(Value = "lasso")]
         Lasso,
+
+        [Parameter(Value = "less")]
         Less,
+
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Lfe")]
+        [Parameter(Value = "lfe")]
         Lfe,
+
         [Parameter(Value = "LillyPond")]
         LillyPond,
+
         [Parameter(Value = "Literate CoffeeScript")]
         LiterateCoffeeScript,
+
         [Parameter(Value = "Literate Haskell")]
         LiterateHaskell,
+
         [Parameter(Value = "LiveScript")]
         LiveScript,
+
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Llvm")]
+        [Parameter(Value = "llvm")]
         Llvm,
+
+        [Parameter(Value = "logos")]
         Logos,
+
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Logtalk")]
+        [Parameter(Value = "logtalk")]
         Logtalk,
+
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Lua")]
+        [Parameter(Value = "lua")]
         Lua,
+
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "M")]
+        [Parameter(Value = "m")]
         M,
+
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Makefile")]
+        [Parameter(Value = "makefile")]
         Makefile,
+
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Mako")]
+        [Parameter(Value = "mako")]
         Mako,
+
+        [Parameter(Value = "markdown")]
         Markdown,
+
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Matlab")]
+        [Parameter(Value = "matlab")]
         Matlab,
+
+        [Parameter(Value = "max")]
         Max,
+
         [Parameter(Value = "MiniD")]
         MiniD,
+
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Mirah")]
+        [Parameter(Value = "mirah")]
         Mirah,
+
+        [Parameter(Value = "monkey")]
         Monkey,
+
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Moocode")]
+        [Parameter(Value = "moocode")]
         Moocode,
+
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Moonscript")]
+        [Parameter(Value = "moonscript")]
         Moonscript,
+
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Mupad")]
+        [Parameter(Value = "mupad")]
         Mupad,
+
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Myghty")]
+        [Parameter(Value = "myghty")]
         Myghty,
+
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Nemerle")]
+        [Parameter(Value = "nemerle")]
         Nemerle,
+
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Nginx")]
+        [Parameter(Value = "nginx")]
         Nginx,
+
+        [Parameter(Value = "nimrod")]
         Nimrod,
+
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Nsis")]
+        [Parameter(Value = "nsis")]
         Nsis,
+
         [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Nu")]
+        [Parameter(Value = "nu")]
         Nu,
+
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Num")]
         [Parameter(Value = "NumPY")]
         NumPY,
+
         [Parameter(Value = "ObjDump")]
         ObjDump,
+
+        [Parameter(Value = "objectivec")]
         ObjectiveC,
+
+        [Parameter(Value = "objectivej")]
         ObjectiveJ,
+
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Caml")]
         [Parameter(Value = "OCaml")]
         OCaml,
+
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Omgrofl")]
+        [Parameter(Value = "omgrofl")]
         Omgrofl,
+
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Ooc")]
+        [Parameter(Value = "ooc")]
         Ooc,
+
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Opa")]
+        [Parameter(Value = "opa")]
         Opa,
+
         [Parameter(Value = "OpenCL")]
         OpenCL,
+        
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Abl")]
         [Parameter(Value = "OpenEdge ABL")]
         OpenEdgeAbl,
+
+        [Parameter(Value = "parrot")]
         Parrot,
+
         [Parameter(Value = "Parrot Assembly")]
         ParrotAssembly,
+
         [Parameter(Value = "Parrot Internal Representation")]
         ParrotInternalRepresentation,
+
+        [Parameter(Value = "pascal")]
         Pascal,
+
+        [Parameter(Value = "perl")]
         Perl,
+
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Php")]
+        [Parameter(Value = "php")]
         Php,
+
+        [Parameter(Value = "pike")]
         Pike,
+
         [Parameter(Value = "PogoScript")]
         PogoScript,
+
         [Parameter(Value = "PowerShell")]
         PowerShell,
+        
+        [Parameter(Value = "processing")]
         Processing,
+
+        [Parameter(Value = "prolog")]
         Prolog,
+
+        [Parameter(Value = "puppet")]
         Puppet,
+
         [Parameter(Value = "Pure Data")]
         PureData,
+
+        [Parameter(Value = "python")]
         Python,
+
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Traceback")]
         [Parameter(Value = "Python traceback")]
         PythonTraceback,
+
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "R")]
+        [Parameter(Value = "r")]
         R,
+
+        [Parameter(Value = "racket")]
         Racket,
+
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Ragel")]
         [Parameter(Value = "Ragel in Ruby Host")]
         RagelInRubyHost,
+
         [Parameter(Value = "Raw token data")]
         RawTokenData,
+
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Rebol")]
+        [Parameter(Value = "rebol")]
         Rebol,
+
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Redcode")]
+        [Parameter(Value = "redcode")]
         Redcode,
+
         [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "ReStructured")]
         [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Re")]
         [Parameter(Value = "reStructuredText")]
         ReStructuredText,
+
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Rhtml")]
+        [Parameter(Value = "rhtml")]
         Rhtml,
+
+        [Parameter(Value = "rouge")]
         Rouge,
+
+        [Parameter(Value = "ruby")]
         Ruby,
+
+        [Parameter(Value = "rust")]
         Rust,
+
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Scala")]
+        [Parameter(Value = "scala")]
         Scala,
+
+        [Parameter(Value = "scheme")]
         Scheme,
+
+        [Parameter(Value = "sage")]
         Sage,
+
+        [Parameter(Value = "sass")]
         Sass,
+
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Scilab")]
+        [Parameter(Value = "scilab")]
         Scilab,
+
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Scss")]
+        [Parameter(Value = "scss")]
         Scss,
+
+        [Parameter(Value = "self")]
         Self,
+
+        [Parameter(Value = "shell")]
         Shell,
+
+        [Parameter(Value = "slash")]
         Slash,
+
+        [Parameter(Value = "smalltalk")]
         Smalltalk,
+
+        [Parameter(Value = "smarty")]
         Smarty,
+
+        [Parameter(Value = "squirrel")]
         Squirrel,
+
         [Parameter(Value = "Standard ML")]
         StandardML,
+
         [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "SuperCollider")]
         [Parameter(Value = "SuperCollider")]
         SuperCollider,
+
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Tcl")]
+        [Parameter(Value = "tcl")]
         Tcl,
+
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Tcsh")]
+        [Parameter(Value = "tcsh")]
         Tcsh,
+
+        [Parameter(Value = "tea")]
         Tea,
+
         [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Te")]
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Te")]
         [Parameter(Value = "TeX")]
         TeX,
+
+        [Parameter(Value = "textile")]
         Textile,
+
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Toml")]
+        [Parameter(Value = "toml")]
         Toml,
+
+        [Parameter(Value = "turing")]
         Turing,
+
+        [Parameter(Value = "twig")]
         Twig,
+
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Txl")]
+        [Parameter(Value = "txl")]
         Txl,
+
         [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "TypeScript")]
         [Parameter(Value = "TypeScript")]
         TypeScript,
+
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Parallel")]
         [Parameter(Value = "Unified Parallel C")]
         UnifiedParallelC,
+
+        [Parameter(Value = "unknown")]
         Unknown,
+
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Vala")]
+        [Parameter(Value = "vala")]
         Vala,
+
+        [Parameter(Value = "verilog")]
         Verilog,
+
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Vhdl")]
+        [Parameter(Value = "vhdl")]
         Vhdl,
+
         [Parameter(Value = "VimL")]
         VimL,
+
+        [Parameter(Value = "visualbasic")]
         VisualBasic,
+
+        [Parameter(Value = "volt")]
         Volt,
+
+        [Parameter(Value = "wisp")]
         Wisp,
+
         [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Xc")]
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Xc")]
+        [Parameter(Value = "xc")]
         Xc,
+
+        [Parameter(Value = "xml")]
         Xml,
+
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Proc")]
         [Parameter(Value = "XProc")]
         XProc,
+
         [Parameter(Value = "XQuery")]
         XQuery,
+
         [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Xs")]
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Xs")]
+        [Parameter(Value = "xs")]
         Xs,
+
+        [Parameter(Value = "xslt")]
         Xslt,
+
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Xtend")]
+        [Parameter(Value = "xtend")]
         Xtend,
+
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Yaml")]
+        [Parameter(Value = "yaml")]
         Yaml
 #pragma warning restore 1591
     }
